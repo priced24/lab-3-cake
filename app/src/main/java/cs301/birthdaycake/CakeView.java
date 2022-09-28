@@ -5,11 +5,16 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.SurfaceView;
+import android.view.View;
 
-public class CakeView extends SurfaceView {
+import java.util.ArrayList;
+
+public class CakeView extends SurfaceView implements View.OnTouchListener{
 
     /* These are the paints we'll use to draw the birthday cake below */
+    Balloon balloon_obj;
     Paint cakePaint = new Paint();
     Paint frostingPaint = new Paint();
     Paint candlePaint = new Paint();
@@ -64,6 +69,7 @@ public class CakeView extends SurfaceView {
         setBackgroundColor(Color.WHITE);  //better than black default
 
         // initialize CakeModel instance variable
+        balloon_obj = new Balloon(-100,0);
         model = new CakeModel();
     }
 
@@ -137,11 +143,27 @@ public class CakeView extends SurfaceView {
             drawCandle(canvas, cakeLeft + (cakeWidth / (model.numCandles + 1)) * i - (candleWidth / 2), cakeTop);
         }
 
+        balloon_obj.draw(canvas);
+
+
     }//onDraw
 
     // getter to retrieve reference to CakeModel object
     public CakeModel getCakeModel() {
         return model;
+    }
+
+    public boolean onTouch(View v, MotionEvent e){
+        if(e.getAction() == MotionEvent.ACTION_DOWN){
+            float x = e.getX();
+            float y = e.getY();
+            balloon_obj.setCenters(x,y);
+            // tell to draw again soon
+            invalidate();
+            return true;
+        }
+        // nothing done
+        return false;
     }
 }//class CakeView
 
