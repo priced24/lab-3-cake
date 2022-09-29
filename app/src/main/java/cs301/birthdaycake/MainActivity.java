@@ -32,6 +32,5 @@ public class MainActivity extends AppCompatActivity {
         seenCandles.setOnCheckedChangeListener(cakeController);
         candleBar.setOnSeekBarChangeListener(cakeController);
 
-        cakeView.setOnTouchListener(cakeController);
     }
 }
