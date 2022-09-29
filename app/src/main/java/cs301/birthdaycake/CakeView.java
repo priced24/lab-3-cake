@@ -9,9 +9,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 import android.view.View;
 
-public class CakeView extends SurfaceView {
+import java.util.ArrayList;
+
+public class CakeView extends SurfaceView implements View.OnTouchListener{
 
     /* These are the paints we'll use to draw the birthday cake below */
+    Balloon balloon_obj;
     Paint cakePaint = new Paint();
     Paint frostingPaint = new Paint();
     Paint candlePaint = new Paint();
@@ -38,11 +41,8 @@ public class CakeView extends SurfaceView {
     public static final float outerFlameRadius = 30.0f;
     public static final float innerFlameRadius = 15.0f;
 
-
     // declare instance variables
     private CakeModel model;
-
-
 
     /**
      * ctor must be overridden here as per standard Java inheritance practice.  We need it
@@ -68,29 +68,10 @@ public class CakeView extends SurfaceView {
         wickPaint.setColor(Color.BLACK);
         wickPaint.setStyle(Paint.Style.FILL);
 
-        checkerBoard1.setColor(0xFF6AA84F); // A shade of green
-        checkerBoard1.setStyle(Paint.Style.FILL);
-        checkerBoard2.setColor(0xFFD75947); // A shade of red
-        checkerBoard2.setStyle(Paint.Style.FILL);
-
         setBackgroundColor(Color.WHITE);  //better than black default
 
         // initialize CakeModel instance variable
         model = new CakeModel();
-    }
-
-    public void drawCheckers(Canvas canvas, float centerX, float centerY) {
-        // Combining two rectangles to make a checkerboard patter
-
-        // Red
-        canvas.drawRect(centerX - 50, centerY - 50, centerX + 50, centerY + 50, checkerBoard1);
-
-        // Green -> top left
-        canvas.drawRect(centerX - 50, centerY - 50, centerX, centerY, checkerBoard2);
-
-        // Green -> bottom right
-        canvas.drawRect(centerX, centerY, centerX + 50, centerY + 50, checkerBoard2);
-
     }
 
     /**
@@ -162,8 +143,6 @@ public class CakeView extends SurfaceView {
         for (int i = 1; i <= model.numCandles; i++) {
             drawCandle(canvas, cakeLeft + (cakeWidth / (model.numCandles + 1)) * i - (candleWidth / 2), cakeTop);
         }
-
-        drawCheckers(canvas, model.touchX, model.touchY);
 
     }//onDraw
 
