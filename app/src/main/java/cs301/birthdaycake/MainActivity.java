@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         // create new CakeController object by calling its constructor
         CakeController cakeController = new CakeController(cakeView);
 
+        cakeView.setOnTouchListener(cakeView);
         blowButton.setOnClickListener(cakeController);
         seenCandles.setOnCheckedChangeListener(cakeController);
         candleBar.setOnSeekBarChangeListener(cakeController);

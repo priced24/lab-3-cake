@@ -1,15 +1,16 @@
 package cs301.birthdaycake;
 
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.SeekBar;
 
 public class CakeController implements View.OnClickListener,
         CompoundButton.OnCheckedChangeListener, SeekBar.OnSeekBarChangeListener {
-    // declare instance variables
     private CakeView cv;
     private CakeModel cm;
+
 
     public CakeController(CakeView view) {
         cv = view;
