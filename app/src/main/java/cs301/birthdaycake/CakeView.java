@@ -5,11 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.SurfaceView;
-import android.view.View;
 
-public class CakeView extends SurfaceView implements View.OnTouchListener {
+public class CakeView extends SurfaceView {
 
     /* These are the paints we'll use to draw the birthday cake below */
     Paint cakePaint = new Paint();
@@ -18,7 +16,6 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
     Paint outerFlamePaint = new Paint();
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
-    Paint locText = new Paint();
 
     /* These constants define the dimensions of the cake.  While defining constants for things
         like this is good practice, we could be calculating these better by detecting
@@ -39,7 +36,6 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
 
     // declare instance variables
     private CakeModel model;
-    private String coords;
 
     /**
      * ctor must be overridden here as per standard Java inheritance practice.  We need it
@@ -52,7 +48,7 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
         setWillNotDraw(false);
 
         //Setup our palette
-        cakePaint.setColor(0xFFFFB90F);  //violet-red
+        cakePaint.setColor(0xFFFFb90F);  //violet-red
         cakePaint.setStyle(Paint.Style.FILL);
         frostingPaint.setColor(0xFFFFFACD);  //pale yellow
         frostingPaint.setStyle(Paint.Style.FILL);
@@ -64,14 +60,11 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
         innerFlamePaint.setStyle(Paint.Style.FILL);
         wickPaint.setColor(Color.BLACK);
         wickPaint.setStyle(Paint.Style.FILL);
-        locText.setColor(Color.RED);
-        locText.setTextSize(100);
 
         setBackgroundColor(Color.WHITE);  //better than black default
 
         // initialize CakeModel instance variable
         model = new CakeModel();
-        coords = "";
     }
 
     /**
@@ -79,11 +72,11 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
      * the position of the bottom left corner of the candle
      */
     public void drawCandle(Canvas canvas, float left, float bottom) {
-        if (model.hasCandles) {
+        if (model.hasCandles == true) {
             canvas.drawRect(left, bottom - candleHeight, left + candleWidth, bottom, candlePaint);
 
             // check if cake model indicates candles should be lit
-            if (model.candlesLit) {
+            if (model.candlesLit == true) {
                 //draw the outer flame
                 float flameCenterX = left + candleWidth/2;
                 float flameCenterY = bottom - wickHeight - candleHeight - outerFlameRadius/3;
@@ -144,26 +137,11 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
             drawCandle(canvas, cakeLeft + (cakeWidth / (model.numCandles + 1)) * i - (candleWidth / 2), cakeTop);
         }
 
-        canvas.drawText(coords, 1475, 1100, locText);
     }//onDraw
 
     // getter to retrieve reference to CakeModel object
     public CakeModel getCakeModel() {
         return model;
-    }
-
-    @Override
-    public boolean onTouch(View view, MotionEvent event) {
-        if (event.getActionMasked() == MotionEvent.ACTION_DOWN) {
-            // get touch location
-            float x = event.getX();
-            float y = event.getY();
-
-            // store x and y as string
-            coords = "(" + x + ", " + y + ")";
-            invalidate();
-        }
-        return true;
     }
 }//class CakeView
 
