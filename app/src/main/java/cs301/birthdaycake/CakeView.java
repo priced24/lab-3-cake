@@ -19,6 +19,8 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
     Paint innerFlamePaint = new Paint();
     Paint wickPaint = new Paint();
     Paint locText = new Paint();
+    checker CHECKER;
+    Balloon balloon_obj;
 
     /* These constants define the dimensions of the cake.  While defining constants for things
         like this is good practice, we could be calculating these better by detecting
@@ -68,6 +70,8 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
         locText.setTextSize(100);
 
         setBackgroundColor(Color.WHITE);  //better than black default
+        balloon_obj = new Balloon(-100,0);
+        CHECKER = new checker(-100,0);
 
         // initialize CakeModel instance variable
         model = new CakeModel();
@@ -143,8 +147,9 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
         for (int i = 1; i <= model.numCandles; i++) {
             drawCandle(canvas, cakeLeft + (cakeWidth / (model.numCandles + 1)) * i - (candleWidth / 2), cakeTop);
         }
-
-        canvas.drawText(coords, 1525, 1700, locText);
+        balloon_obj.draw(canvas);
+        CHECKER.drawCheckers(canvas);
+        canvas.drawText(coords, 1400, 1100, locText);
     }//onDraw
 
 
@@ -161,6 +166,8 @@ public class CakeView extends SurfaceView implements View.OnTouchListener {
             float y = e.getY();
 
             // store x and y float values into coords string
+            balloon_obj.setCenters(x,y);
+            CHECKER.setCenters(x,y);
             coords = ("(" + x + ", " + y + ")");
             invalidate();
         }
