@@ -30,5 +30,7 @@ public class MainActivity extends AppCompatActivity {
         blowButton.setOnClickListener(cakeController);
         seenCandles.setOnCheckedChangeListener(cakeController);
         candleBar.setOnSeekBarChangeListener(cakeController);
+
+        cakeView.setOnTouchListener(cakeController);
     }
 }
